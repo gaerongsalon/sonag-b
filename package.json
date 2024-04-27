@@ -1,0 +1,9 @@
+{
+  "name": "@sonagb/root",
+  "private": true,
+  "license": "ISC",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  }
+}

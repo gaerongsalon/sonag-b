@@ -18,3 +18,13 @@ export default async function useQuery<R>(
     await connection.end();
   }
 }
+
+export async function useQueryFetch<T>(
+  query: string,
+  args: unknown[]
+): Promise<T[]> {
+  const [result] = await useQuery((connection) =>
+    connection.query(query, args)
+  );
+  return (result ?? []) as T[];
+}

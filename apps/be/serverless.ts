@@ -1,5 +1,5 @@
 import type { AWS } from "@serverless/typescript";
-import hello from "@functions/hello";
+import functions from "@functions/index";
 
 const serverlessConfiguration: AWS = {
   service: "sonagbe",
@@ -21,20 +21,21 @@ const serverlessConfiguration: AWS = {
       DB_PASSWORD: process.env.DB_PASSWORD,
       DB_DATABASE: process.env.DB_DATABASE,
     },
+    httpApi: {
+      cors: {
+        allowedOrigins: [process.env.CORS_ALLOW_ORIGIN!],
+        allowedHeaders: ["Content-Type"],
+        allowedMethods: ["GET", "POST", "DELETE", "PUT"],
+        allowCredentials: true,
+      },
+    },
   },
   // import the function via paths
-  functions: { hello },
+  functions,
   package: { individually: true },
   custom: {
     esbuild: {
-      bundle: true,
-      minify: false,
-      sourcemap: true,
-      exclude: ["aws-sdk"],
-      target: "node20",
-      define: { "require.resolve": undefined },
-      platform: "node",
-      concurrency: 10,
+      config: "./esbuild.config.js",
     },
   },
 };

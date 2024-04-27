@@ -3,6 +3,7 @@ import "@mantine/core/styles.css";
 
 import { MantineProvider, createTheme } from "@mantine/core";
 
+import Html5QrcodePlugin from "./plugin/barcode/Html5QrcodeScannerPlugin";
 import reactLogo from "./assets/react.svg";
 import { useState } from "react";
 import viteLogo from "/vite.svg";
@@ -13,6 +14,7 @@ const theme = createTheme({
 
 function App() {
   const [count, setCount] = useState(0);
+  const [code, setCode] = useState("");
 
   return (
     <>
@@ -34,9 +36,19 @@ function App() {
             Edit <code>src/App.tsx</code> and save to test HMR
           </p>
         </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
+        <p className="read-the-docs">{code}</p>
+        <Html5QrcodePlugin  
+          fps={10}
+          qrbox={500}
+          disableFlip={true}
+          qrCodeErrorCallback={(error) => {
+            console.error(error);
+          }}
+          qrCodeSuccessCallback={(result) => {
+            console.info(result);
+            setCode(result);
+          }}
+        />
       </MantineProvider>
     </>
   );

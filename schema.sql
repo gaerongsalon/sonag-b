@@ -1,0 +1,9 @@
+-- CREATE DATABASE sonagb DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- CREATE USER 'sonagb'@'%' IDENTIFIED BY 'PASSWORD';
+-- GRANT ALL PRIVILEGES ON sonagb.* TO 'sonagb'@'%' WITH GRANT OPTION;
+CREATE TABLE
+  `sonagb`.`hello` (
+    `seq` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(80) NOT NULL UNIQUE,
+    PRIMARY KEY (`seq`)
+  );

@@ -1,28 +1,28 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
+import { APIGatewayProxyResultV2 } from "aws-lambda";
 
 import { failed } from "@libs/api-gateway";
 import useQuery from "@libs/useQuery";
+import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
+import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 
 export async function main({
   pathParameters = {},
   body = "{}",
-}: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2<never>> {
+  requestContext: {
+    authorizer: { seq: accountSeq },
+  },
+}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+  APIGatewayProxyResultV2<never>
+> {
   const { stageSeq: maybeStageSeq } = pathParameters;
   if (!maybeStageSeq || !/^\d+$/.test(maybeStageSeq)) {
     return failed("Missing stageSeq");
   }
   const stageSeq = +maybeStageSeq;
 
-  const { userName, score } = JSON.parse(body);
-  if (!userName || !score) {
+  const { score } = JSON.parse(body);
+  if (!score) {
     return failed("Missing userName or score at payload");
-  }
-  if (typeof userName !== "string") {
-    return failed("'userName' must be a string");
-  }
-  const userNameString = (userName as string).trim();
-  if (!userNameString) {
-    return failed("'userName' must not be empty string");
   }
   if (typeof score !== "number") {
     return failed("'score' must be a number");
@@ -34,12 +34,12 @@ export async function main({
 
   const [result] = await useQuery((connection) =>
     connection.execute(
-      `INSERT INTO scoreboard (stageSeq, userName, score) VALUES (?, ?, ?)`,
-      [stageSeq, userNameString, scoreNumber]
+      `INSERT INTO scoreboard (stageSeq, accountSeq, score) VALUES (?, ?, ?)`,
+      [stageSeq, accountSeq, scoreNumber]
     )
   );
   console.info(
-    { result, stageSeq, userName: userNameString, score: scoreNumber },
+    { result, stageSeq, accountSeq, score: scoreNumber },
     "new stage score inserted"
   );
 

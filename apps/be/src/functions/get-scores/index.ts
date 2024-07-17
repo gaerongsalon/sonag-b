@@ -1,16 +1,16 @@
 import { AWSFunction } from "@libs/api-gateway";
 import { handlerPath } from "@libs/handler-resolver";
 
-const getStages: AWSFunction = {
+const getScores: AWSFunction = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
       httpApi: {
         authorizer: "authorize",
         method: "get",
-        path: "/api/stage",
+        path: "/api/score",
       },
     },
   ],
 };
-export default getStages;
+export default getScores;

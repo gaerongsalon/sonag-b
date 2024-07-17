@@ -1,6 +1,9 @@
-import middy from "@middy/core";
-import middyJsonBodyParser from "@middy/http-json-body-parser";
+import {
+  APIGatewayEventRequestContextV2WithAuthorizer,
+  APIGatewayProxyEventV2WithRequestContext,
+} from "aws-lambda";
 
-export const middyfy = (handler) => {
-  return middy(handler).use(middyJsonBodyParser());
-};
+export type APIGatewayProxyEventV2WithCustomAuthorizer<TAuthorizer> =
+  APIGatewayProxyEventV2WithRequestContext<
+    APIGatewayEventRequestContextV2WithAuthorizer<TAuthorizer>
+  >;

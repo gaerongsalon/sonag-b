@@ -1,11 +1,15 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
+import AuthorizationContext from "@functions/authorize/AuthorizationContext";
+import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
+import { APIGatewayProxyResultV2 } from "aws-lambda";
 
 import { JSDOM } from "jsdom";
 import fetch from "node-fetch";
 
 export async function main({
   pathParameters = {},
-}: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2<never>> {
+}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+  APIGatewayProxyResultV2<never>
+> {
   const { isbn: maybeIsbn = "" } = pathParameters;
   if (!maybeIsbn) {
     return {

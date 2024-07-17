@@ -1,12 +1,19 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
+import { APIGatewayProxyResultV2 } from "aws-lambda";
 import { failed, succeed } from "@libs/api-gateway";
 
 import { ResultSetHeader } from "mysql2";
 import useQuery from "@libs/useQuery";
+import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
+import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 
 export async function main({
   body = "{}",
-}: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2<never>> {
+  requestContext: {
+    authorizer: { seq: accountSeq },
+  },
+}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+  APIGatewayProxyResultV2<never>
+> {
   const { name, data } = JSON.parse(body);
   if (!name || !data) {
     return failed("Missing name or data at payload");
@@ -33,8 +40,8 @@ export async function main({
 
   const [result] = await useQuery((connection) =>
     connection.execute<ResultSetHeader>(
-      `INSERT INTO stage (name, data) VALUES (?, ?)`,
-      [nameString, JSON.stringify(dataStringArray)]
+      `INSERT INTO stage (accountSeq, name, data) VALUES (?, ?, ?)`,
+      [accountSeq, nameString, JSON.stringify(dataStringArray)]
     )
   );
   const stage = {

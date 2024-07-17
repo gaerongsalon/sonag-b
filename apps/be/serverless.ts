@@ -9,6 +9,8 @@ const serverlessConfiguration: AWS = {
     name: "aws",
     runtime: "nodejs20.x",
     region: "ap-northeast-2",
+    memorySize: 256,
+    timeout: 6,
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -20,6 +22,7 @@ const serverlessConfiguration: AWS = {
       DB_USER: process.env.DB_USER,
       DB_PASSWORD: process.env.DB_PASSWORD,
       DB_DATABASE: process.env.DB_DATABASE,
+      JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
     },
     httpApi: {
       cors: {
@@ -28,9 +31,21 @@ const serverlessConfiguration: AWS = {
         allowedMethods: ["GET", "POST", "DELETE", "PUT"],
         allowCredentials: true,
       },
+      authorizers: {
+        authorize: {
+          type: "request",
+          functionName: "authorize",
+          enableSimpleResponses: true,
+          identitySource: ["$request.header.cookie"],
+        },
+      },
+    },
+    logs: {
+      httpApi: {
+        format: `$context.identity.sourceIp - - [$context.requestTime] "$context.routeKey $context.protocol" $context.status $context.responseLength $context.requestId $context.authorizer.error`,
+      },
     },
   },
-  // import the function via paths
   functions,
   package: { individually: true },
   custom: {

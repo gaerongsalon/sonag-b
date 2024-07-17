@@ -16,9 +16,11 @@
     "@mantine/hooks": "^7.8.1",
     "@mantine/modals": "^7.8.1",
     "@mantine/notifications": "^7.8.1",
+    "@react-oauth/google": "^0.12.1",
     "html5-qrcode": "^2.3.8",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.25.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.1",

@@ -1,10 +1,17 @@
 import { APIGatewayProxyResultV2 } from "aws-lambda";
-import { succeed } from "@libs/api-gateway";
+import { OkResponse, succeed } from "@libs/api-gateway";
 import { useQueryFetch } from "@libs/useQuery";
 
 const fetchCount = 30;
 
-export async function main(): Promise<APIGatewayProxyResultV2<never>> {
+type GetStagesResponse = {
+  seq: number;
+  name: string;
+}[];
+
+export async function main(): Promise<
+  APIGatewayProxyResultV2<OkResponse<GetStagesResponse>>
+> {
   const dbStages = await useQueryFetch<{ seq: number; name: string }>(
     `SELECT seq, name FROM stage ORDER BY seq DESC LIMIT ${fetchCount}`,
     []

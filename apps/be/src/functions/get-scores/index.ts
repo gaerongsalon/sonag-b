@@ -6,7 +6,10 @@ const getScores: AWSFunction = {
   events: [
     {
       httpApi: {
-        authorizer: "authorize",
+        authorizer: {
+          name: "authorize",
+          type: "request",
+        },
         method: "get",
         path: "/api/score",
       },

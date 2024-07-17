@@ -1,9 +1,13 @@
 import { APIGatewayProxyResultV2 } from "aws-lambda";
 
-import { failed } from "@libs/api-gateway";
+import { failed, OkResponse, succeed } from "@libs/api-gateway";
 import useQuery from "@libs/useQuery";
 import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
+
+interface PostStageScoreResponse {
+  score: number;
+}
 
 export async function main({
   pathParameters = {},
@@ -12,7 +16,7 @@ export async function main({
     authorizer: { seq: accountSeq },
   },
 }: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
-  APIGatewayProxyResultV2<never>
+  APIGatewayProxyResultV2<OkResponse<PostStageScoreResponse>>
 > {
   const { stageSeq: maybeStageSeq } = pathParameters;
   if (!maybeStageSeq || !/^\d+$/.test(maybeStageSeq)) {
@@ -43,5 +47,5 @@ export async function main({
     "new stage score inserted"
   );
 
-  return { statusCode: 200, body: JSON.stringify({ ok: true }) };
+  return succeed({ score }, 200);
 }

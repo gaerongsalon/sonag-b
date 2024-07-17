@@ -6,7 +6,10 @@ const titleByIsbn: AWSFunction = {
   events: [
     {
       httpApi: {
-        authorizer: "authorize",
+        authorizer: {
+          name: "authorize",
+          type: "request",
+        },
         method: "get",
         path: "/api/title-by-isbn/{isbn}",
       },

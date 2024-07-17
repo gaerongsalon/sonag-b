@@ -25,16 +25,20 @@ export const formatJSONResponse = (response: Record<string, unknown>) => {
 
 export type AWSFunction = AWS["functions"]["any"];
 
-export function succeed(
-  result: unknown,
+export type SucceedResponse<T> = { ok: true; result: T };
+export type FailedResponse = { ok: false; error: string };
+export type OkResponse<T> = SucceedResponse<T> | FailedResponse;
+
+export function succeed<T>(
+  result: T,
   statusCode: number = 200
-): APIGatewayProxyResultV2 {
+): APIGatewayProxyResultV2<SucceedResponse<T>> {
   return { statusCode, body: JSON.stringify({ ok: true, result }) };
 }
 
 export function failed(
   error: string,
   statusCode: number = 400
-): APIGatewayProxyResultV2 {
+): APIGatewayProxyResultV2<FailedResponse> {
   return { statusCode, body: JSON.stringify({ ok: false, error }) };
 }

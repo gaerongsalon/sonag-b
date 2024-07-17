@@ -6,7 +6,10 @@ const postStageScore: AWSFunction = {
   events: [
     {
       httpApi: {
-        authorizer: "authorize",
+        authorizer: {
+          name: "authorize",
+          type: "request",
+        },
         method: "post",
         path: "/api/stage/{stageSeq}/score",
       },

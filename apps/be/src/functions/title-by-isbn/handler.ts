@@ -1,14 +1,19 @@
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
+import { failed, OkResponse, succeed } from "@libs/api-gateway";
 import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
 import { APIGatewayProxyResultV2 } from "aws-lambda";
 
 import { JSDOM } from "jsdom";
 import fetch from "node-fetch";
 
+interface TitleByIsbnResponse {
+  title: string;
+}
+
 export async function main({
   pathParameters = {},
 }: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
-  APIGatewayProxyResultV2<never>
+  APIGatewayProxyResultV2<OkResponse<TitleByIsbnResponse>>
 > {
   const { isbn: maybeIsbn = "" } = pathParameters;
   if (!maybeIsbn) {
@@ -23,13 +28,7 @@ export async function main({
     `https://www.nl.go.kr/seoji/contents/S80100000000.do?schType=simple&schStr=${isbnCode}`
   );
   if (!response.ok) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        ok: false,
-        error: `No data from ISBN[${isbnCode}]`,
-      }),
-    };
+    return failed(`No data from ISBN[${isbnCode}]`, 400);
   }
 
   const html = await response.text();
@@ -37,13 +36,7 @@ export async function main({
   const { document } = window;
   const element = document.querySelector("#resultList_div div.tit");
   if (!element) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        ok: false,
-        error: `No data from ISBN[${isbnCode}]`,
-      }),
-    };
+    return failed(`No data from ISBN[${isbnCode}]`, 400);
   }
 
   const title = element.textContent?.trim() ?? "";
@@ -51,8 +44,5 @@ export async function main({
     ? title.substring(title.indexOf(".") + 1).trim()
     : title;
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ ok: true, result: { title: bookTitle } }),
-  };
+  return succeed({ title: bookTitle }, 200);
 }

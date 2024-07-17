@@ -1,11 +1,18 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
-import { failed, succeed } from "@libs/api-gateway";
+import { failed, OkResponse, succeed } from "@libs/api-gateway";
 
 import { useQueryFetch } from "@libs/useQuery";
 
+interface GetStageResponse {
+  name: string;
+  data: string[];
+}
+
 export async function main({
   pathParameters = {},
-}: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2<never>> {
+}: APIGatewayProxyEventV2): Promise<
+  APIGatewayProxyResultV2<OkResponse<GetStageResponse>>
+> {
   const { stageSeq: maybeStageSeq } = pathParameters;
   if (!maybeStageSeq || !/^\d+$/.test(maybeStageSeq)) {
     return failed("Missing stageSeq");

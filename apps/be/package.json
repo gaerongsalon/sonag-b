@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "serverless.ts",
   "scripts": {
-    "dev": "serverless offline",
+    "dev": "CORS_ALLOW_ORIGIN=http://localhost:5173 serverless offline",
     "build": "serverless package",
     "deploy": "serverless deploy",
     "status": "serverless info"

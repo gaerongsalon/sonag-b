@@ -6,7 +6,10 @@ const getStage: AWSFunction = {
   events: [
     {
       httpApi: {
-        authorizer: "authorize",
+        authorizer: {
+          name: "authorize",
+          type: "request",
+        },
         method: "get",
         path: "/api/stage/{stageSeq}",
       },

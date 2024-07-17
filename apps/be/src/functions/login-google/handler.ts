@@ -6,20 +6,23 @@ import {
   loginCookieExpiresIn,
   cookieName,
 } from "@functions/authorize/config";
-import useQuery from "@libs/useQuery";
+import useQuery, { useQueryFetch } from "@libs/useQuery";
 import { ResultSetHeader } from "mysql2";
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
+import { failed, OkResponse } from "@libs/api-gateway";
 
 export async function main({
   queryStringParameters: { token } = { token: "" },
-}: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2<never>> {
+}: APIGatewayProxyEventV2): Promise<
+  APIGatewayProxyResultV2<OkResponse<undefined>>
+> {
   if (!token) {
-    return { statusCode: 400 };
+    return failed("No token", 400);
   }
 
   const response = await fetchGoogleUserinfo(token);
   if (response.error) {
-    return { statusCode: 401 };
+    return failed("Invalid token", 401);
   }
   const { email, name } = response;
 
@@ -29,7 +32,17 @@ export async function main({
       [email, name, name]
     )
   );
-  const seq = result.insertId;
+  let seq = result.insertId;
+  if (seq === 0) {
+    const [account] = await useQueryFetch<{ seq: number }>(
+      `SELECT seq FROM account WHERE email = ?`,
+      [email]
+    );
+    if (!account) {
+      return failed("Cannot create a new account", 500);
+    }
+    seq = account.seq;
+  }
   console.info({ seq, email, name }, "Logged by Google OAuth");
 
   const context: AuthorizationContext = { seq, email, name };

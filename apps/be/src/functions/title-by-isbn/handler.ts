@@ -44,5 +44,6 @@ export async function main({
     ? title.substring(title.indexOf("]") + 1).trim()
     : title;
 
-  return succeed({ title: bookTitle }, 200);
+  const normalizedTitle = bookTitle.replace(/[\s\u00A0]+/g, " ");
+  return succeed({ title: normalizedTitle }, 200);
 }

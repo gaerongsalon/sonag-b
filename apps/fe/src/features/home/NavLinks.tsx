@@ -63,7 +63,7 @@ export default function NavLinks({
       {menus.playGame && (
         <NavLink
           component={Link}
-          to={paths.playGame}
+          to={paths.getGames}
           label="게임 하기"
           leftSection={<IconGoGame />}
         />

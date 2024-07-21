@@ -99,18 +99,27 @@ importers:
       '@react-oauth/google':
         specifier: ^0.12.1
         version: 0.12.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tabler/icons-react':
+        specifier: ^3.11.0
+        version: 3.11.0(react@18.3.1)
       html5-qrcode:
         specifier: ^2.3.8
         version: 2.3.8
       react:
         specifier: ^18.3.1
         version: 18.3.1
+      react-barcode-scanner:
+        specifier: ^2.1.0
+        version: 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-router-dom:
         specifier: ^6.25.0
         version: 6.25.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      swr:
+        specifier: ^2.2.5
+        version: 2.2.5(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: ^18.3.1
@@ -152,6 +161,18 @@ importers:
         specifier: ^5.2.10
         version: 5.2.10(@types/node@20.12.7)(sugarss@4.0.1(postcss@8.4.38))
 
+  infra/cdn-stack:
+    devDependencies:
+      '@serverless/typescript':
+        specifier: 3.38.0
+        version: 3.38.0
+      serverless-s3-sync:
+        specifier: ^3.0.0
+        version: 3.3.0(serverless@3.39.0(@aws-sdk/credential-provider-node@3.614.0(@aws-sdk/client-sso-oidc@3.614.0(@aws-sdk/client-sts@3.614.0))(@aws-sdk/client-sts@3.614.0)))
+      ts-node:
+        specifier: ^10.7.0
+        version: 10.9.2(@types/node@20.12.7)(typescript@5.4.5)
+
 packages:
 
   2-thenable@1.0.0:
@@ -160,6 +181,10 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@auth0/s3@1.0.0':
+    resolution: {integrity: sha512-O8PTXJnA7n8ONBSwqlWa+aZ/vlOdZYnSCGQt25h87ALWNItY/Yij79TOnzIkMTJZ8aCpGXQPuIRziLmBliV++Q==}
+    engines: {node: '>=8.0.0'}
 
   '@aws-crypto/crc32@3.0.0':
     resolution: {integrity: sha512-IzSgsrxUcsrejQbPVilIKy16kAT52EwB6zSaI+M3xxIhKh5+aldEyvI+z6erM7TCLB2BJsFrtHjp6/4/sr+3dA==}
@@ -950,6 +975,9 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
+  '@preflower/barcode-detector-polyfill@0.9.20':
+    resolution: {integrity: sha512-05jorEJ/ld8bABmrPlw4O9awIRtjElR6nuIOg3pT0VD8WzlzlPyQeke0fh6LxAg1YFt2Luivb2wLDXKmrJLfNA==}
+
   '@react-oauth/google@0.12.1':
     resolution: {integrity: sha512-qagsy22t+7UdkYAiT5ZhfM4StXi9PPNvw0zuwNmabrWyMKddczMtBIOARflbaIj+wHiQjnMAsZmzsUYuXeyoSg==}
     peerDependencies:
@@ -1432,6 +1460,14 @@ packages:
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
     engines: {node: '>=10'}
 
+  '@tabler/icons-react@3.11.0':
+    resolution: {integrity: sha512-xHNBi9mns1slvqos+7LkP3ube4CjWrANMbxMaorzwzO9J/+y1sAEG/sN8CV8FmtpYW/9/gDR+OWCjjLLg0RmAw==}
+    peerDependencies:
+      react: '>= 16'
+
+  '@tabler/icons@3.11.0':
+    resolution: {integrity: sha512-/vZinJNvCYhdAB+RUsyCpanSPuOEKHHIZi4Uu0Bw7ilewHnQhCWUPrT704uHCRli2ROl7spADPmWzAqOganA5A==}
+
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
 
@@ -1561,6 +1597,9 @@ packages:
   '@typescript-eslint/visitor-keys@7.7.1':
     resolution: {integrity: sha512-gBL3Eq25uADw1LQ9kVpf3hRM+DWzs0uZknHYK3hq4jcTPqVCClHGDnB6UUUV2SFeBeA4KWHWbbLqmbGcZ4FYbw==}
     engines: {node: ^18.18.0 || >=20.0.0}
+
+  '@undecaf/zbar-wasm@0.10.1':
+    resolution: {integrity: sha512-nQGPCHO/4383oMurHp4smoxG3ZYgNX6K+MxdID8D5Rs5yzUzQKkClQeYEH7jST9OacGb18Ohmwl5IrHZfwdn+w==}
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
@@ -1888,6 +1927,9 @@ packages:
   cli-width@3.0.0:
     resolution: {integrity: sha512-FxqpkPPwu1HjuN93Omfm4h8uIanXofW0RxVEW3k5RKx+mJJYSthzNhp32Kzxxy3YAEZ/Dc/EWN1vZRY0+kOhbw==}
     engines: {node: '>= 10'}
+
+  client-only@0.0.1:
+    resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
   cliui@7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
@@ -2323,6 +2365,9 @@ packages:
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
+  fd-slicer@1.0.1:
+    resolution: {integrity: sha512-MX1ZLPIuKED51hrI4++K+1B0VX87Cs4EkybD2q12Ysuf5p4vkmHqMvQJRlDwROqFr4D2Pzyit5wGQxf30grIcw==}
+
   fd-slicer@1.1.0:
     resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
 
@@ -2381,6 +2426,10 @@ packages:
   find-up@5.0.0:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
+
+  findit2@2.2.3:
+    resolution: {integrity: sha512-lg/Moejf4qXovVutL0Lz4IsaPoNYMuxt4PA0nGqFxnJ1CTTGGlEO2wKgoDpwknhvZ8k4Q2F+eesgkLbG2Mxfog==}
+    engines: {node: '>=0.8.22'}
 
   flat-cache@3.2.0:
     resolution: {integrity: sha512-CYcENa+FtcUKLmhhqyctpclsq7QF38pKjZHsGNiSQF5r4FtoKDWabFDl3hzaEQMvT1LHEysw5twgLvpYYb4vbw==}
@@ -2537,6 +2586,9 @@ packages:
   got@11.8.6:
     resolution: {integrity: sha512-6tfZ91bOr7bOXnK7PRDCGBLa1H4U080YHNaAQ2KsMGlLEzRbk44nsZF2E1IeRc3vtJHPVbKCYgdFbaGO2ljd8g==}
     engines: {node: '>=10.19.0'}
+
+  graceful-fs@4.1.15:
+    resolution: {integrity: sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==}
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -3100,6 +3152,10 @@ packages:
     resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
     engines: {node: '>= 8'}
 
+  mkdirp@0.5.6:
+    resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
+    hasBin: true
+
   mkdirp@1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
@@ -3453,6 +3509,12 @@ packages:
   ramda@0.28.0:
     resolution: {integrity: sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==}
 
+  react-barcode-scanner@2.1.0:
+    resolution: {integrity: sha512-heFxCfOFSJRAqof/qU/DPzLRcuWbn5mBB/dADuJvMN65m6fZRwG98JCVNP+2fMtattxyi3kwJKZIS09/QV2YAA==}
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
+
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
@@ -3584,6 +3646,11 @@ packages:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
+  rimraf@2.2.8:
+    resolution: {integrity: sha512-R5KMKHnPAQaZMqLOsyuyUmcIjSeDm+73eoqQpaXA7AZ22BL+6C+1mcUscgOsNd8WVlJuvlgAPsegcx7pjlV0Dg==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
+    hasBin: true
+
   rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
     deprecated: Rimraf versions prior to v4 are no longer supported
@@ -3637,6 +3704,9 @@ packages:
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
 
+  sdp@3.2.0:
+    resolution: {integrity: sha512-d7wDPgDV3DDiqulJjKiV2865wKsJ34YI+NDREbm+FySq6WuKOikwyNQcm+doLAZ1O6ltdO0SeKle2xMpN3Brgw==}
+
   seek-bzip@1.0.6:
     resolution: {integrity: sha512-e1QtP3YL5tWww8uKaOCQ18UxIT2laNBXHjV/S2WYCiK4udiv8lkG89KRIoCjUagnAmCBurjF4zEVX2ByBbnCjQ==}
     hasBin: true
@@ -3672,6 +3742,11 @@ packages:
     engines: {node: '>=18.12.0'}
     peerDependencies:
       serverless: ^3.2.0
+
+  serverless-s3-sync@3.3.0:
+    resolution: {integrity: sha512-1tW6URG8iwZ70okAvr1c+M/R/kBK8qmt3G3BjM3Rfc6I+KzPP0kiKYV3akfif+lSVUxBsPpEdVJK/uEJJlbH+A==}
+    peerDependencies:
+      serverless: ^3.0.0
 
   serverless@3.38.0:
     resolution: {integrity: sha512-NJE1vOn8XmQEqfU9UxmVhkUFaCRmx6FhYw/jITN863WlOt4Y3PQbj3hwQyIb5QS1ZrXFq5ojklwewUXH7xGpdA==}
@@ -3763,6 +3838,9 @@ packages:
   stream-promise@3.2.0:
     resolution: {integrity: sha512-P+7muTGs2C8yRcgJw/PPt61q7O517tDHiwYEzMWo1GSBCcZedUMT/clz7vUNsSxFphIlJ6QUL4GexQKlfJoVtA==}
 
+  streamsink@1.2.0:
+    resolution: {integrity: sha512-MJ440L2+j2vmc1v8Z/BkMx3X+HsJ++V7mgDROboQKxqCLZdNbu+AeSwQbayXw3LPHVAMxw+h7ZJUnyFYl/zp2g==}
+
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
     engines: {node: '>=8'}
@@ -3852,6 +3930,11 @@ packages:
   supports-color@8.1.1:
     resolution: {integrity: sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==}
     engines: {node: '>=10'}
+
+  swr@2.2.5:
+    resolution: {integrity: sha512-QtxqyclFeAsxEUeZIYmsaQ0UjimSq1RZ9Un7I68/0ClKK/U3LoyQunwkQfJZr2fc22DfIXLNDc2wFyTEikCUpg==}
+    peerDependencies:
+      react: ^16.11.0 || ^17.0.0 || ^18.0.0
 
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
@@ -3953,6 +4036,9 @@ packages:
 
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+
+  tslib@2.6.3:
+    resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -4088,6 +4174,11 @@ packages:
       '@types/react':
         optional: true
 
+  use-sync-external-store@1.2.2:
+    resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -4162,6 +4253,10 @@ packages:
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
     engines: {node: '>=12'}
+
+  webrtc-adapter@9.0.1:
+    resolution: {integrity: sha512-1AQO+d4ElfVSXyzNVTOewgGT/tAomwwztX/6e3totvyyzXPvXIIuUUjAmyZGbKBKbZOXauuJooZm3g6IuFuiNQ==}
+    engines: {node: '>=6.0.0', npm: '>=3.10.0'}
 
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
@@ -4315,6 +4410,18 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+
+  '@auth0/s3@1.0.0':
+    dependencies:
+      aws-sdk: 2.1608.0
+      fd-slicer: 1.0.1
+      findit2: 2.2.3
+      graceful-fs: 4.1.15
+      mime: 2.6.0
+      mkdirp: 0.5.6
+      pend: 1.2.0
+      rimraf: 2.2.8
+      streamsink: 1.2.0
 
   '@aws-crypto/crc32@3.0.0':
     dependencies:
@@ -6069,6 +6176,10 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
+  '@preflower/barcode-detector-polyfill@0.9.20':
+    dependencies:
+      '@undecaf/zbar-wasm': 0.10.1
+
   '@react-oauth/google@0.12.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
@@ -6866,6 +6977,13 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
+  '@tabler/icons-react@3.11.0(react@18.3.1)':
+    dependencies:
+      '@tabler/icons': 3.11.0
+      react: 18.3.1
+
+  '@tabler/icons@3.11.0': {}
+
   '@tokenizer/token@0.3.0': {}
 
   '@tsconfig/node10@1.0.11': {}
@@ -7032,6 +7150,8 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 7.7.1
       eslint-visitor-keys: 3.4.3
+
+  '@undecaf/zbar-wasm@0.10.1': {}
 
   '@ungap/structured-clone@1.2.0': {}
 
@@ -7431,6 +7551,8 @@ snapshots:
       supports-color: 6.1.0
 
   cli-width@3.0.0: {}
+
+  client-only@0.0.1: {}
 
   cliui@7.0.4:
     dependencies:
@@ -8005,6 +8127,10 @@ snapshots:
     dependencies:
       reusify: 1.0.4
 
+  fd-slicer@1.0.1:
+    dependencies:
+      pend: 1.2.0
+
   fd-slicer@1.1.0:
     dependencies:
       pend: 1.2.0
@@ -8059,6 +8185,8 @@ snapshots:
     dependencies:
       locate-path: 6.0.0
       path-exists: 4.0.0
+
+  findit2@2.2.3: {}
 
   flat-cache@3.2.0:
     dependencies:
@@ -8238,6 +8366,8 @@ snapshots:
       lowercase-keys: 2.0.0
       p-cancelable: 2.1.1
       responselike: 2.0.1
+
+  graceful-fs@4.1.15: {}
 
   graceful-fs@4.2.11: {}
 
@@ -8769,6 +8899,10 @@ snapshots:
       minipass: 3.3.6
       yallist: 4.0.0
 
+  mkdirp@0.5.6:
+    dependencies:
+      minimist: 1.2.8
+
   mkdirp@1.0.4: {}
 
   mnemonist@0.39.8:
@@ -9097,6 +9231,14 @@ snapshots:
 
   ramda@0.28.0: {}
 
+  react-barcode-scanner@2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@preflower/barcode-detector-polyfill': 0.9.20
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tslib: 2.6.3
+      webrtc-adapter: 9.0.1
+
   react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
@@ -9233,6 +9375,8 @@ snapshots:
 
   reusify@1.0.4: {}
 
+  rimraf@2.2.8: {}
+
   rimraf@3.0.2:
     dependencies:
       glob: 7.2.3
@@ -9304,6 +9448,8 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
+  sdp@3.2.0: {}
+
   seek-bzip@1.0.6:
     dependencies:
       commander: 2.20.3
@@ -9367,6 +9513,14 @@ snapshots:
       - encoding
       - supports-color
       - utf-8-validate
+
+  serverless-s3-sync@3.3.0(serverless@3.39.0(@aws-sdk/credential-provider-node@3.614.0(@aws-sdk/client-sso-oidc@3.614.0(@aws-sdk/client-sts@3.614.0))(@aws-sdk/client-sts@3.614.0))):
+    dependencies:
+      '@auth0/s3': 1.0.0
+      bluebird: 3.7.2
+      mime: 2.6.0
+      minimatch: 3.1.2
+      serverless: 3.39.0(@aws-sdk/credential-provider-node@3.614.0(@aws-sdk/client-sso-oidc@3.614.0(@aws-sdk/client-sts@3.614.0))(@aws-sdk/client-sts@3.614.0))
 
   serverless@3.38.0(@aws-sdk/credential-provider-node@3.564.0):
     dependencies:
@@ -9589,6 +9743,8 @@ snapshots:
       es5-ext: 0.10.64
       is-stream: 1.1.0
 
+  streamsink@1.2.0: {}
+
   string-width@4.2.3:
     dependencies:
       emoji-regex: 8.0.0
@@ -9694,6 +9850,12 @@ snapshots:
   supports-color@8.1.1:
     dependencies:
       has-flag: 4.0.0
+
+  swr@2.2.5(react@18.3.1):
+    dependencies:
+      client-only: 0.0.1
+      react: 18.3.1
+      use-sync-external-store: 1.2.2(react@18.3.1)
 
   symbol-tree@3.2.4: {}
 
@@ -9810,6 +9972,8 @@ snapshots:
   tslib@1.14.1: {}
 
   tslib@2.6.2: {}
+
+  tslib@2.6.3: {}
 
   type-check@0.4.0:
     dependencies:
@@ -9946,6 +10110,10 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.1
 
+  use-sync-external-store@1.2.2(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   util-deprecate@1.0.2: {}
 
   util@0.12.5:
@@ -9997,6 +10165,10 @@ snapshots:
   webidl-conversions@3.0.1: {}
 
   webidl-conversions@7.0.0: {}
+
+  webrtc-adapter@9.0.1:
+    dependencies:
+      sdp: 3.2.0
 
   whatwg-encoding@3.1.1:
     dependencies:

@@ -1,0 +1,20 @@
+{
+  "name": "cdn-stack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "sls deploy",
+    "sync": "sls s3sync",
+    "config": "sls print",
+    "status": "sls info"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@serverless/typescript": "3.38.0",
+    "serverless-s3-sync": "^3.0.0",
+    "ts-node": "^10.7.0"
+  }
+}

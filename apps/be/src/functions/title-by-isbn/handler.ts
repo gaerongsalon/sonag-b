@@ -1,8 +1,8 @@
-import AuthorizationContext from "@functions/authorize/AuthorizationContext";
-import { failed, OkResponse, succeed } from "@libs/api-gateway";
+import { OkResponse, failed, succeed } from "@libs/api-gateway";
+
 import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
 import { APIGatewayProxyResultV2 } from "aws-lambda";
-
+import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 import { JSDOM } from "jsdom";
 import fetch from "node-fetch";
 
@@ -24,9 +24,7 @@ export async function main({
   }
   const isbnCode = maybeIsbn.replace(/-/g, "");
 
-  const response = await fetch(
-    `https://www.nl.go.kr/seoji/contents/S80100000000.do?schType=simple&schStr=${isbnCode}`
-  );
+  const response = await fetch(`https://m.yes24.com/Search?query=${isbnCode}`);
   if (!response.ok) {
     return failed(`No data from ISBN[${isbnCode}]`, 400);
   }
@@ -34,14 +32,14 @@ export async function main({
   const html = await response.text();
   const { window } = new JSDOM(html);
   const { document } = window;
-  const element = document.querySelector("#resultList_div div.tit");
+  const element = document.querySelector("#yesSchGList div.info_row.info_name");
   if (!element) {
     return failed(`No data from ISBN[${isbnCode}]`, 400);
   }
 
   const title = element.textContent?.trim() ?? "";
-  const bookTitle = title.includes(".")
-    ? title.substring(title.indexOf(".") + 1).trim()
+  const bookTitle = title.includes("]")
+    ? title.substring(title.indexOf("]") + 1).trim()
     : title;
 
   return succeed({ title: bookTitle }, 200);

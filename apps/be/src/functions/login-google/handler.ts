@@ -1,15 +1,15 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
-
-import fetchGoogleUserinfo from "./fetchGoogleUserinfo";
+import { OkResponse, failed } from "@libs/api-gateway";
 import {
-  signToken,
-  loginCookieExpiresIn,
   cookieName,
+  loginCookieExpiresIn,
+  signToken,
 } from "@functions/authorize/config";
 import useQuery, { useQueryFetch } from "@libs/useQuery";
-import { ResultSetHeader } from "mysql2";
+
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
-import { failed, OkResponse } from "@libs/api-gateway";
+import { ResultSetHeader } from "mysql2";
+import fetchGoogleUserinfo from "./fetchGoogleUserinfo";
 
 export async function main({
   queryStringParameters: { token } = { token: "" },
@@ -28,8 +28,8 @@ export async function main({
 
   const [result] = await useQuery((connection) =>
     connection.execute<ResultSetHeader>(
-      `INSERT INTO account (email, name) VALUES (?, ?) ON DUPLICATE KEY UPDATE name = ?`,
-      [email, name, name]
+      `INSERT INTO account (email, name, alias) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE name = ?`,
+      [email, name, email, name]
     )
   );
   let seq = result.insertId;

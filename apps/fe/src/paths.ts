@@ -4,8 +4,8 @@ const paths = {
   scanBook: "/book/scan",
   createGame: "/add-stage",
   getGames: "/stage",
-  playGame: "/stage/{stageId}",
-  seeStageRanking: "/stage/{stageId}/ranking",
+  playGame: "/stage/:stageSeq",
+  seeStageRanking: "/stage/:stageSeq/ranking",
   seeTotalRanking: "/ranking",
 };
 

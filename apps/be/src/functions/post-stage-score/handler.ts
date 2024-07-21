@@ -1,9 +1,11 @@
-import { APIGatewayProxyResultV2 } from "aws-lambda";
+import {
+  APIGatewayProxyEventV2WithLambdaAuthorizer,
+  APIGatewayProxyResultV2,
+} from "aws-lambda";
+import { OkResponse, failed, succeed } from "@libs/api-gateway";
 
-import { failed, OkResponse, succeed } from "@libs/api-gateway";
-import useQuery from "@libs/useQuery";
-import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
+import useQuery from "@libs/useQuery";
 
 interface PostStageScoreResponse {
   score: number;
@@ -13,9 +15,11 @@ export async function main({
   pathParameters = {},
   body = "{}",
   requestContext: {
-    authorizer: { seq: accountSeq },
+    authorizer: {
+      lambda: { seq: accountSeq },
+    },
   },
-}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+}: APIGatewayProxyEventV2WithLambdaAuthorizer<AuthorizationContext>): Promise<
   APIGatewayProxyResultV2<OkResponse<PostStageScoreResponse>>
 > {
   const { stageSeq: maybeStageSeq } = pathParameters;

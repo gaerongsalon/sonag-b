@@ -1,10 +1,12 @@
-import { APIGatewayProxyResultV2 } from "aws-lambda";
-import { failed, OkResponse, succeed } from "@libs/api-gateway";
+import {
+  APIGatewayProxyEventV2WithLambdaAuthorizer,
+  APIGatewayProxyResultV2,
+} from "aws-lambda";
+import { OkResponse, failed, succeed } from "@libs/api-gateway";
 
+import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 import { ResultSetHeader } from "mysql2";
 import useQuery from "@libs/useQuery";
-import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
-import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 
 interface AddStageResponse {
   seq: number;
@@ -15,9 +17,11 @@ interface AddStageResponse {
 export async function main({
   body = "{}",
   requestContext: {
-    authorizer: { seq: accountSeq },
+    authorizer: {
+      lambda: { seq: accountSeq },
+    },
   },
-}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+}: APIGatewayProxyEventV2WithLambdaAuthorizer<AuthorizationContext>): Promise<
   APIGatewayProxyResultV2<OkResponse<AddStageResponse>>
 > {
   const { name, data } = JSON.parse(body);

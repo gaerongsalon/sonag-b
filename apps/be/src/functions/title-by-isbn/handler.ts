@@ -1,7 +1,9 @@
+import {
+  APIGatewayProxyEventV2WithLambdaAuthorizer,
+  APIGatewayProxyResultV2,
+} from "aws-lambda";
 import { OkResponse, failed, succeed } from "@libs/api-gateway";
 
-import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
-import { APIGatewayProxyResultV2 } from "aws-lambda";
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 import { JSDOM } from "jsdom";
 import fetch from "node-fetch";
@@ -12,7 +14,7 @@ interface TitleByIsbnResponse {
 
 export async function main({
   pathParameters = {},
-}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+}: APIGatewayProxyEventV2WithLambdaAuthorizer<AuthorizationContext>): Promise<
   APIGatewayProxyResultV2<OkResponse<TitleByIsbnResponse>>
 > {
   const { isbn: maybeIsbn = "" } = pathParameters;

@@ -1,7 +1,9 @@
+import {
+  APIGatewayProxyEventV2WithLambdaAuthorizer,
+  APIGatewayProxyResultV2,
+} from "aws-lambda";
 import { OkResponse, failed, succeed } from "@libs/api-gateway";
 
-import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
-import { APIGatewayProxyResultV2 } from "aws-lambda";
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 import { ResultSetHeader } from "mysql2";
 import useQuery from "@libs/useQuery";
@@ -9,9 +11,11 @@ import useQuery from "@libs/useQuery";
 export async function main({
   body = "{}",
   requestContext: {
-    authorizer: { seq: accountSeq },
+    authorizer: {
+      lambda: { seq: accountSeq },
+    },
   },
-}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+}: APIGatewayProxyEventV2WithLambdaAuthorizer<AuthorizationContext>): Promise<
   APIGatewayProxyResultV2<OkResponse<void>>
 > {
   const { alias } = JSON.parse(body);

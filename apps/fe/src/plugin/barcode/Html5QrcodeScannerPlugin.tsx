@@ -65,6 +65,9 @@ export default function Html5QrcodePlugin(
 
     // cleanup function when component will unmount
     return () => {
+      try {
+        html5QrcodeScanner.pause(true);
+      } catch (error) {}
       html5QrcodeScanner.clear().catch((error) => {
         console.error("Failed to clear html5QrcodeScanner. ", error);
       });

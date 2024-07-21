@@ -1,7 +1,9 @@
+import {
+  APIGatewayProxyEventV2WithLambdaAuthorizer,
+  APIGatewayProxyResultV2,
+} from "aws-lambda";
 import { OkResponse, failed, succeed } from "@libs/api-gateway";
 
-import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
-import { APIGatewayProxyResultV2 } from "aws-lambda";
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 import { ResultSetHeader } from "mysql2";
 import useQuery from "@libs/useQuery";
@@ -15,9 +17,11 @@ interface AddBookResponse {
 export async function main({
   body = "{}",
   requestContext: {
-    authorizer: { seq: accountSeq },
+    authorizer: {
+      lambda: { seq: accountSeq },
+    },
   },
-}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+}: APIGatewayProxyEventV2WithLambdaAuthorizer<AuthorizationContext>): Promise<
   APIGatewayProxyResultV2<OkResponse<AddBookResponse>>
 > {
   const { title, isbn } = JSON.parse(body);
@@ -38,6 +42,8 @@ export async function main({
   if (!isbnString) {
     return failed("'isbn' must not be empty string");
   }
+
+  console.info({ accountSeq, isbnString, titleString }, "insert new book");
 
   const [result] = await useQuery((connection) =>
     connection.execute<ResultSetHeader>(

@@ -1,6 +1,7 @@
 import First from "./features/home/First.tsx";
 import Home from "./features/home/Home.tsx";
 import RegisterBook from "./features/registerBook/RegisterBook.tsx";
+import ScanBarcode from "./features/registerBook/ScanBarcode.tsx";
 import { createBrowserRouter } from "react-router-dom";
 import paths from "./paths.ts";
 
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: paths.registerBook,
         Component: RegisterBook,
+      },
+      {
+        path: paths.scanBook,
+        Component: ScanBarcode,
       },
     ],
   },

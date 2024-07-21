@@ -1,7 +1,9 @@
+import {
+  APIGatewayProxyEventV2WithLambdaAuthorizer,
+  APIGatewayProxyResultV2,
+} from "aws-lambda";
 import { OkResponse, succeed } from "@libs/api-gateway";
 
-import { APIGatewayProxyEventV2WithCustomAuthorizer } from "@libs/lambda";
-import { APIGatewayProxyResultV2 } from "aws-lambda";
 import AuthorizationContext from "@functions/authorize/AuthorizationContext";
 import { useQueryFetch } from "@libs/useQuery";
 
@@ -15,9 +17,11 @@ type ListBooksResponse = {
 
 export async function main({
   requestContext: {
-    authorizer: { seq: accountSeq },
+    authorizer: {
+      lambda: { seq: accountSeq },
+    },
   },
-}: APIGatewayProxyEventV2WithCustomAuthorizer<AuthorizationContext>): Promise<
+}: APIGatewayProxyEventV2WithLambdaAuthorizer<AuthorizationContext>): Promise<
   APIGatewayProxyResultV2<OkResponse<ListBooksResponse>>
 > {
   const dbBooks = await useQueryFetch<{
